@@ -8,8 +8,6 @@
             http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/context
             http://www.springframework.org/schema/context/spring-context.xsd
-
-
             http://www.springframework.org/schema/mvc
             http://www.springframework.org/schema/mvc/spring-mvc.xsd
             http://www.springframework.org/schema/tx
@@ -34,7 +32,7 @@
     </mvc:annotation-driven>
     <!-- 静态资源处理 -->
     <mvc:default-servlet-handler/>
-    <!--  配置Freemarker模板引擎  -->
+    <!-- 配置Freemarker模板引擎 -->
     <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
         <property name="templateLoaderPath" value="/WEB-INF/ftl"/>
         <property name="freemarkerSettings">
@@ -48,7 +46,7 @@
         <property name="suffix" value=".ftl"/>
     </bean>
 
-    <!--  Mybatis与Spring的整合配置  -->
+    <!-- Mybatis与Spring的整合配置 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
         <property name="url"
@@ -59,7 +57,12 @@
         <property name="maxActive" value="20"/>
     </bean>
     <!-- 根据配置信息创建SqlSessionFactory,不再需要我们自己编码创建 -->
-    <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <!--
+         原生Mybatis与Spring整合
+         <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+     -->
+    <!-- 整合Mybatis-plus插件 -->
+    <bean id="sessionFactory" class="com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="mapperLocations" value="classpath:mappers/*.xml"/>
         <property name="configLocation" value="classpath:mybatis-config.xml"/>
@@ -68,10 +71,10 @@
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.mumu.reader.mapper"/>
     </bean>
-    <!--  配置声明式事务  -->
+    <!-- 配置声明式事务 -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
-    <!--  启用事务注解模式  -->
+    <!-- 启用事务注解模式 -->
     <tx:annotation-driven transaction-manager="transactionManager"/>
 </beans>
