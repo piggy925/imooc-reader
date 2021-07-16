@@ -26,9 +26,20 @@ public class BookServiceImpl implements BookService {
      * @return 分页对象
      */
     @Override
-    public IPage<Book> paging(Integer page, Integer rows) {
+    public IPage<Book> paging(Long categoryId, String order, Integer page, Integer rows) {
         Page<Book> bookPage = new Page<>(page, rows);
-        IPage<Book> bookObject = bookMapper.selectPage(bookPage, new QueryWrapper<>());
+        QueryWrapper<Book> queryWrapper = new QueryWrapper<>();
+        if (categoryId != null && categoryId != -1) {
+            queryWrapper.eq("category_id", categoryId);
+        }
+        if (order != null) {
+            if (order.equals("quantity")) {
+                queryWrapper.orderByDesc("evaluation_quantity");
+            } else if (order.equals("score")) {
+                queryWrapper.orderByDesc("evaluation_score");
+            }
+        }
+        IPage<Book> bookObject = bookMapper.selectPage(bookPage, queryWrapper);
         return bookObject;
     }
 }

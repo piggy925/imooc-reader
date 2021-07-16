@@ -15,5 +15,5 @@ public interface BookService {
      * @param rows 每页记录数
      * @return 分页对象
      */
-    IPage<Book> paging(Integer page, Integer rows);
+    IPage<Book> paging(Long categoryId, String order, Integer page, Integer rows);
 }
