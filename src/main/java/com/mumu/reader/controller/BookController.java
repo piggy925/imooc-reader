@@ -3,10 +3,13 @@ package com.mumu.reader.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.mumu.reader.entity.Book;
 import com.mumu.reader.entity.Category;
+import com.mumu.reader.entity.Evaluation;
 import com.mumu.reader.service.BookService;
 import com.mumu.reader.service.CategoryService;
+import com.mumu.reader.service.EvaluationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -22,6 +25,8 @@ public class BookController {
     private CategoryService categoryService;
     @Resource
     private BookService bookService;
+    @Resource
+    private EvaluationService evaluationService;
 
     /**
      * 显示首页
@@ -50,5 +55,15 @@ public class BookController {
         }
         IPage<Book> pageObject = bookService.paging(categoryId, order, p, 10);
         return pageObject;
+    }
+
+    @GetMapping("/book/{id}")
+    public ModelAndView selectBookById(@PathVariable("id") Long bookId) {
+        ModelAndView mav = new ModelAndView("/detail");
+        Book book = bookService.selectById(bookId);
+        mav.addObject("book", book);
+        List<Evaluation> evaluationList = evaluationService.selectByBookId(bookId);
+        mav.addObject("evaluationList", evaluationList);
+        return mav;
     }
 }
