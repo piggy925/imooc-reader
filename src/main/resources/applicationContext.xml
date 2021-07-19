@@ -100,4 +100,26 @@
     </bean>
     <!-- 启用事务注解模式 -->
     <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!-- 配置验证码插件 -->
+    <bean id="kaptchProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+        <property name="config">
+            <bean class="com.google.code.kaptcha.util.Config">
+                <constructor-arg>
+                    <props>
+                        <!-- 设置有无边框 -->
+                        <prop key="kaptcha.border">no</prop>
+                        <!-- 设置验证码图片宽度 -->
+                        <prop key="kaptcha.image.width">120</prop>
+                        <!-- 设置图片字体颜色 -->
+                        <prop key="kaptcha.textproducer.font.color">blue</prop>
+                        <!-- 设置每个字符最大占用 -->
+                        <prop key="kaptcha.textproducer.font.size">40</prop>
+                        <!-- 设置验证码包含字符数量 -->
+                        <prop key="kaptcha.textproducer.char.length">4</prop>
+                    </props>
+                </constructor-arg>
+            </bean>
+        </property>
+    </bean>
 </beans>

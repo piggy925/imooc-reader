@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <title>慕课书评网</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0,user-scalable=no">
-    <link rel="stylesheet" href="./resources/bootstrap/bootstrap.css">
-    <link rel="stylesheet" href="./resources/raty/lib/jquery.raty.css">
-    <script src="./resources/jquery.3.3.1.min.js"></script>
-    <script src="./resources/bootstrap/bootstrap.min.js"></script>
-    <script src="./resources/art-template.js"></script>
-    <script src="./resources/raty/lib/jquery.raty.js"></script>
+    <link rel="stylesheet" href="/resources/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="/resources/raty/lib/jquery.raty.css">
+    <script src="/resources/jquery.3.3.1.min.js"></script>
+    <script src="/resources/bootstrap/bootstrap.min.js"></script>
+    <script src="/resources/art-template.js"></script>
+    <script src="/resources/raty/lib/jquery.raty.js"></script>
 
     <script>
-        $.fn.raty.defaults.path = "./resources/raty/lib/images";
+        $.fn.raty.defaults.path = "/resources/raty/lib/images";
 
         function loadMore(isReset) {
             if (isReset == true) {
