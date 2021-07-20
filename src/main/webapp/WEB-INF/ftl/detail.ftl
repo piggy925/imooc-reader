@@ -136,7 +136,7 @@
                 </div>
                 <hr/>
             </div>
-        </#list>po
+        </#list>
     </div>
 </div>
 
