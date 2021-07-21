@@ -143,9 +143,19 @@
             </li>
 
         </ul>
-        <a href="/login.html" class="btn btn-light btn-sm">
-            <img style="width: 2rem;margin-top: -5px" class="mr-1" src="./images/user_icon.png">登录
-        </a>
+
+        <#if loginUser??>
+            <h6 class="mt-1">
+                <a>
+                    <img style="width: 2rem;margin-top: -5px" class="mr-1"
+                         src="./images/user_icon.png">${loginUser.nickname}
+                </a>
+            </h6>
+        <#else>
+            <a href="/login.html" class="btn btn-light btn-sm">
+                <img style="width: 2rem;margin-top: -5px" class="mr-1" src="./images/user_icon.png">登录
+            </a>
+        </#if>
     </nav>
     <div class="row mt-2">
 
