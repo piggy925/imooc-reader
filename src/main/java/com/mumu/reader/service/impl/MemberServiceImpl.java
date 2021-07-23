@@ -1,12 +1,17 @@
 package com.mumu.reader.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.mumu.reader.entity.Evaluation;
 import com.mumu.reader.entity.Member;
+import com.mumu.reader.entity.MemberReadState;
+import com.mumu.reader.mapper.EvaluationMapper;
 import com.mumu.reader.mapper.MemberMapper;
+import com.mumu.reader.mapper.MemberReadStateMapper;
 import com.mumu.reader.service.MemberService;
 import com.mumu.reader.service.exception.BussinessException;
 import com.mumu.reader.utils.MD5Utils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -19,6 +24,10 @@ import java.util.Random;
 public class MemberServiceImpl implements MemberService {
     @Resource
     private MemberMapper memberMapper;
+    @Resource
+    private MemberReadStateMapper memberReadStateMapper;
+    @Resource
+    private EvaluationMapper evaluationMapper;
 
     @Override
     public Member createMember(String username, String password, String nickname) {
@@ -55,5 +64,49 @@ public class MemberServiceImpl implements MemberService {
             throw new BussinessException("M03", "密码错误");
         }
         return member;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
+    public MemberReadState getMemberReadState(Long memberId, Long bookId) {
+        QueryWrapper<MemberReadState> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("member_id", memberId);
+        queryWrapper.eq("book_id", bookId);
+        MemberReadState memberReadState = memberReadStateMapper.selectOne(queryWrapper);
+        return memberReadState;
+    }
+
+    @Override
+    public MemberReadState updateMemberReadState(Long memberId, Long bookId, Integer readState) {
+        QueryWrapper<MemberReadState> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("member_id", memberId);
+        queryWrapper.eq("book_id", bookId);
+        MemberReadState memberReadState = memberReadStateMapper.selectOne(queryWrapper);
+        if (memberReadState == null) {
+            memberReadState = new MemberReadState();
+            memberReadState.setMemberId(memberId);
+            memberReadState.setBookId(bookId);
+            memberReadState.setCreateTime(new Date());
+            memberReadState.setReadState(readState);
+            memberReadStateMapper.insert(memberReadState);
+        } else {
+            memberReadState.setReadState(readState);
+            memberReadStateMapper.updateById(memberReadState);
+        }
+        return memberReadState;
+    }
+
+    @Override
+    public Evaluation evaluate(Long memberId, Long bookId, Integer score, String content) {
+        Evaluation evaluation = new Evaluation();
+        evaluation.setMemberId(memberId);
+        evaluation.setBookId(bookId);
+        evaluation.setScore(score);
+        evaluation.setContent(content);
+        evaluation.setCreateTime(new Date());
+        evaluation.setState("enable");
+        evaluation.setEnjoy(0);
+        evaluationMapper.insert(evaluation);
+        return evaluation;
     }
 }

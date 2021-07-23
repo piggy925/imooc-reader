@@ -48,6 +48,56 @@
         $(function () {
             $(".stars").raty({readOnly: true});
         })
+
+        $(function () {
+            <#if memberReadState ??>
+            $("*[data-read-state = '${memberReadState.getReadState()}'").addClass("highlight")
+            </#if>
+            <#if !loginUser ??>
+            $("*[data-read-state]").click(function () {
+                $("#exampleModalCenter").modal("show");
+            })
+            </#if>
+
+            <#if loginUser ??>
+            $("*[data-read-state]").click(function () {
+                var readState = $(this).data("read-state");
+                $.post("/update_read_state", {
+                    memberId: ${loginUser.memberId},
+                    bookId: ${book.bookId},
+                    readState: readState
+                }, function (json) {
+                    if (json.code === "0") {
+                        $("*[data-read-state]").removeClass("highlight");
+                        $("*[data-read-state = '" + readState + "']").addClass("highlight");
+                    }
+                }, "json")
+            })
+
+            $("#btnEvaluation").click(function () {
+                $("#score").raty({});
+                $("#dlgEvaluation").modal("show");
+            })
+
+            $("#btnSubmit").click(function () {
+                var score = $("#score").raty("score");
+                var content = $("#content").val();
+                if (score === 0 || $.trim(content) == "") {
+                    return;
+                }
+                $.post("/evaluate", {
+                    memberId: ${loginUser.memberId},
+                    bookId: ${book.bookId},
+                    score: score,
+                    content: content
+                }, function (json) {
+                    if (json.code === "0") {
+                        window.location.reload();
+                    }
+                }, "json ")
+            })
+            </#if>
+        })
     </script>
 </head>
 <body>
@@ -161,7 +211,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-body">
-                <h6>为"从 0 开始学爬虫"写短评</h6>
+                <h6>${book.bookName}</h6>
                 <form id="frmEvaluation">
                     <div class="input-group  mt-2 ">
                         <span id="score"></span>

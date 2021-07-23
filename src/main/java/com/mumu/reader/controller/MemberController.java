@@ -74,4 +74,36 @@ public class MemberController {
         }
         return result;
     }
+
+    @PostMapping("/update_read_state")
+    @ResponseBody
+    public Map updateMemberReadState(Long memberId, Long bookId, Integer readState) {
+        Map result = new HashMap();
+        try {
+            memberService.updateMemberReadState(memberId, bookId, readState);
+            result.put("code", "0");
+            result.put("msg", "success");
+        } catch (BussinessException e) {
+            e.printStackTrace();
+            result.put("code", e.getCode());
+            result.put("msg", e.getMessage());
+        }
+        return result;
+    }
+
+    @PostMapping("/evaluate")
+    @ResponseBody
+    public Map evaluate(Long memberId, Long bookId, Integer score, String content) {
+        Map result = new HashMap();
+        try {
+            memberService.evaluate(memberId, bookId, score, content);
+            result.put("code", "0");
+            result.put("msg", "success");
+        } catch (BussinessException e) {
+            e.printStackTrace();
+            result.put("code", e.getCode());
+            result.put("msg", e.getMessage());
+        }
+        return result;
+    }
 }

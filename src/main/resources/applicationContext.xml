@@ -52,7 +52,7 @@
         <property name="url"
                   value="jdbc:mysql://localhost:3306/imooc_reader?useSSL=false&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=Asia/Shanghai&amp;allowPublicKeyRetrieval=true"/>
         <property name="username" value="root"/>
-        <property name="password" value="aaa1234"/>
+        <property name="password" value="aaaa1234"/>
         <property name="initialSize" value="5"/>
         <property name="maxActive" value="20"/>
     </bean>
