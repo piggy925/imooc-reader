@@ -109,4 +109,12 @@ public class MemberServiceImpl implements MemberService {
         evaluationMapper.insert(evaluation);
         return evaluation;
     }
+
+    @Override
+    public Evaluation enjoy(Long evaluationId) {
+        Evaluation evaluation = evaluationMapper.selectById(evaluationId);
+        evaluation.setEnjoy(evaluation.getEnjoy() + 1);
+        evaluationMapper.updateById(evaluation);
+        return evaluation;
+    }
 }

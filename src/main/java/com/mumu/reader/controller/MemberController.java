@@ -1,5 +1,6 @@
 package com.mumu.reader.controller;
 
+import com.mumu.reader.entity.Evaluation;
 import com.mumu.reader.entity.Member;
 import com.mumu.reader.service.MemberService;
 import com.mumu.reader.service.exception.BussinessException;
@@ -99,6 +100,23 @@ public class MemberController {
             memberService.evaluate(memberId, bookId, score, content);
             result.put("code", "0");
             result.put("msg", "success");
+        } catch (BussinessException e) {
+            e.printStackTrace();
+            result.put("code", e.getCode());
+            result.put("msg", e.getMessage());
+        }
+        return result;
+    }
+
+    @PostMapping("/enjoy")
+    @ResponseBody
+    public Map evaluate(Long evaluateId) {
+        Map result = new HashMap();
+        try {
+            Evaluation evaluation = memberService.enjoy(evaluateId);
+            result.put("code", "0");
+            result.put("msg", "success");
+            result.put("evaluation", evaluation);
         } catch (BussinessException e) {
             e.printStackTrace();
             result.put("code", e.getCode());

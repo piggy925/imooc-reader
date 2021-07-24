@@ -56,4 +56,12 @@ public interface MemberService {
      * @return 评价对象
      */
     Evaluation evaluate(Long memberId, Long bookId, Integer score, String content);
+
+    /**
+     * 评论点赞
+     *
+     * @param evaluationId 评论id
+     * @return 评论对象
+     */
+    Evaluation enjoy(Long evaluationId);
 }
