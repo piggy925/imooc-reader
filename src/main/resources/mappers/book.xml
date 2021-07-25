@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mumu.reader.mapper.BookMapper">
+    <update id="updateEvaluation">
+        update book b
+        set evaluation_score    =
+                    (select ifnull(avg(score), 0)
+                     from evaluation
+                     where book_id = b.book_id
+                       and evaluation.state = 'enable'),
+            evaluation_quantity = (
+                    select ifnull(count(*), 0)
+                    from evaluation
+                    where book_id = b.book_id
+                      and evaluation.state = 'enable')
+    </update>
 </mapper>

@@ -18,4 +18,9 @@ public interface BookService {
     IPage<Book> paging(Long categoryId, String order, Integer page, Integer rows);
 
     Book selectById(Long bookId);
+
+    /**
+     * 更新图书评分与评论数量
+     */
+    void updateEvaluation();
 }
