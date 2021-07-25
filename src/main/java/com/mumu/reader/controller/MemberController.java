@@ -110,10 +110,10 @@ public class MemberController {
 
     @PostMapping("/enjoy")
     @ResponseBody
-    public Map evaluate(Long evaluateId) {
+    public Map evaluate(Long evaluationId) {
         Map result = new HashMap();
         try {
-            Evaluation evaluation = memberService.enjoy(evaluateId);
+            Evaluation evaluation = memberService.enjoy(evaluationId);
             result.put("code", "0");
             result.put("msg", "success");
             result.put("evaluation", evaluation);
