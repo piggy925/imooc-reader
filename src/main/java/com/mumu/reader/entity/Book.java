@@ -45,7 +45,15 @@ public class Book {
     /**
      * 图书评分
      */
-    private Double evaluationScore;
+    private Float evaluationScore;
+
+    public Float getEvaluationScore() {
+        return evaluationScore;
+    }
+
+    public void setEvaluationScore(Float evaluationScore) {
+        this.evaluationScore = evaluationScore;
+    }
 
     /**
      * 评价数量
@@ -106,14 +114,6 @@ public class Book {
 
     public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
-    }
-
-    public Double getEvaluationScore() {
-        return evaluationScore;
-    }
-
-    public void setEvaluationScore(Double evaluationScore) {
-        this.evaluationScore = evaluationScore;
     }
 
     public Integer getEvaluationQuantity() {
